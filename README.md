@@ -2,6 +2,12 @@
 
 This project is a RESTful API built with **Node.js**, **Express**, **MongoDB**, and **Joi** for validation. It includes authentication using JWT, structured routes, controllers, services, middleware, and a clean folder structure.
 
+This project includes full API documentation using **Swagger UI**.
+
+After running the server, you can access the Swagger docs at:
+
+**http://localhost:5000/api-docs/**
+
 ## Authentication
 
 - User register
@@ -39,7 +45,7 @@ npm install
 ```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+JWT_SECRET=skygate__
 ```
 
 ## How to Run the Project
