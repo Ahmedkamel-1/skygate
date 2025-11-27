@@ -60,8 +60,9 @@ Create `.env` file:
 
 ```
 PORT=5000
-MONGO_URI=your_mongo_uri
-JWT_SECRET=your_secret
+MONGO_URI=mongodb+srv://ahmed:ahmed2411@cluster0.xzid19l.mongodb.net/?appName=Cluster0
+JWT_SECRET=skygate__
+SALT_ROUND = 8
 ```
 
 ## 📌 Validation
@@ -121,8 +122,9 @@ npm install
 
 ```
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+MONGO_URI=mongodb+srv://ahmed:ahmed2411@cluster0.xzid19l.mongodb.net/?appName=Cluster0
+JWT_SECRET=skygate__
+SALT_ROUND = 8
 ```
 
 ## How to Run the Project
