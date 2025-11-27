@@ -41,15 +41,12 @@ export const productService = {
     try {
       const { page, limit, category, type, search, sort, order, minPrice, maxPrice } = filters;
 
-      // Build query
       const query = {};
 
-      // Role-based filtering
       if (userRole === 'user') {
         query.type = 'public';
       }
 
-      // Apply filters
       if (category) query.category = category;
       if (type) query.type = type;
 
@@ -66,16 +63,13 @@ export const productService = {
         if (maxPrice !== undefined) query.price.$lte = maxPrice;
       }
 
-      // Count total items
       const totalItems = await Product.countDocuments(query);
 
-      // Build sort object
       const sortObj = {};
       if (sort) {
         sortObj[sort] = order === 'desc' ? -1 : 1;
       }
 
-      // Fetch products
       const products = await Product.find(query)
         .sort(sortObj)
         .skip((page - 1) * limit)
@@ -101,7 +95,6 @@ export const productService = {
     }
   },
 
-  // Get single product by ID
   async getProductById(id, userRole) {
     try {
       const product = await Product.findById(id);
@@ -110,7 +103,6 @@ export const productService = {
         return null;
       }
 
-      // Check access for users (private products return null)
       if (userRole === 'user' && product.type === 'private') {
         return null;
       }
@@ -122,16 +114,13 @@ export const productService = {
     }
   },
 
-  // Update product
   async updateProduct(id, updateData, userRole) {
     try {
-      // Find existing product
       const existingProduct = await Product.findById(id);
       if (!existingProduct) {
         return null;
       }
 
-      // Check discount price against existing/new price
       if (updateData.discountPrice !== undefined && updateData.discountPrice !== null) {
         const comparePrice = updateData.price !== undefined ? updateData.price : existingProduct.price;
         if (updateData.discountPrice >= comparePrice) {
@@ -143,7 +132,6 @@ export const productService = {
         }
       }
 
-      // Sanitize update data
       const sanitizedData = {};
       if (updateData.name !== undefined) sanitizedData.name = updateData.name.trim();
       if (updateData.description !== undefined) {
@@ -155,7 +143,6 @@ export const productService = {
       if (updateData.discountPrice !== undefined) sanitizedData.discountPrice = updateData.discountPrice;
       if (updateData.quantity !== undefined) sanitizedData.quantity = updateData.quantity;
 
-      // Update product
       const product = await Product.findByIdAndUpdate(
         id,
         sanitizedData,
@@ -171,7 +158,6 @@ export const productService = {
     }
   },
 
-  // Delete product
   async deleteProduct(id) {
     try {
       const product = await Product.findByIdAndDelete(id);
@@ -189,19 +175,15 @@ export const productService = {
     }
   },
 
-  // Get statistics
   async getStatistics() {
     try {
-      // Check cache
       if (statsCache && statsCacheTime && (Date.now() - statsCacheTime < CACHE_DURATION)) {
         console.log('Statistics retrieved from cache');
         return statsCache;
       }
 
-      // Fetch all products
       const products = await Product.find({});
 
-      // Calculate statistics
       const totalProducts = products.length;
       let totalInventoryValue = 0;
       let totalDiscountedValue = 0;
@@ -221,14 +203,12 @@ export const productService = {
           outOfStockCount++;
         }
 
-        // By category
         if (!categoryMap[product.category]) {
           categoryMap[product.category] = { count: 0, totalValue: 0 };
         }
         categoryMap[product.category].count++;
         categoryMap[product.category].totalValue += inventoryValue;
 
-        // By type
         if (!typeMap[product.type]) {
           typeMap[product.type] = { count: 0, totalValue: 0 };
         }
@@ -260,7 +240,6 @@ export const productService = {
         productsByType
       };
 
-      // Update cache
       statsCache = stats;
       statsCacheTime = Date.now();
 

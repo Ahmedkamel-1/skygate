@@ -1,25 +1,27 @@
-import  dotenv  from 'dotenv';
+import dotenv  from 'dotenv';
 import express from 'express'
+import  authRouter from './src/modules/auth/auth.router.js'
 import { swaggerDocs } from "./src/config/swagger.js";
 import { connectDB } from './DB/connection.js'
-import {productRouter} from './src/modules/product/product.router.js'
-import authRouter from './src/modules/auth/auth.router.js'
-//import { authLimiter, generalLimiter } from '././src/middleware/ratelimiter.js'
+import  productRouter  from './src/modules/product/product.router.js'
+import { authLimiter, generalLimiter } from '././src/middleware/ratelimiter.js'
 
 
 const app = express();
 dotenv.config()
 
-// Middleware
+
 app.use(express.json());
-//app.use(generalLimiter)
-//app.use('auth',authLimiter , authRouter)
+
+
+app.use(generalLimiter)
+app.use('auth',authLimiter , authRouter)
+
+
 // API Routes
-const router = express.Router();
-
-
 swaggerDocs(app);
-// product  router
+
+// product  
 app.use('/api/products', productRouter);
 
 // auth
@@ -108,5 +110,4 @@ connectDB()
 
 // Start Server
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))

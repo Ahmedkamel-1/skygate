@@ -8,7 +8,42 @@ const router = Router();
 
 /**
  * @swagger
- * /auth/register:
+ * components:
+ *   schemas:
+ *     Register:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           example: ahmed
+ *         email:
+ *           type: string
+ *           example: ahmed@example.com
+ *         password:
+ *           type: string
+ *           example: "12345678"
+
+ *     Login:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           example: ahmed@example.com
+ *         password:
+ *           type: string
+ *           example: "12345678"
+ */
+
+/**
+ * @swagger
+ * /api/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -28,7 +63,7 @@ router.post("/register", validate(registerSchema), register);
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login user and return token
  *     tags: [Auth]

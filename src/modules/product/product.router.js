@@ -1,17 +1,16 @@
-/**
- * @swagger
- * tags:
- *   name: Products
- *   description: Product management API
- */
-
-import Router from "express";
-import { createProduct, deleteProduct, getAllProducts, getProductById, getStatistics, updateProduct } from "./product.controller.js";
-import { validate, queryParamsSchema } from "../../middleware/validation.middleware.js";
-import { createProductSchema, updateProductSchema } from "./product.validation.js";
+import { Router } from "express";
+import {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+  deleteProduct,
+  getStatistics,
+} from "../product/product.controller.js";
+import { createProductSchema, queryParamsSchema, updateProductSchema, validate } from "../../middleware/validation.middleware.js";
 import { auth } from "../../middleware/authorization.middleware.js";
 
-export const productRouter = Router();
+const router = Router();
 
 /**
  * @swagger
@@ -25,120 +24,139 @@ export const productRouter = Router();
  *       200:
  *         description: Statistics retrieved successfully
  */
-productRouter.get('/stats', auth("admin"), getStatistics);
+router.get('/stats', auth("admin"), getStatistics);
 
 /**
  * @swagger
- * /products:
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           example: Hoodie
+ *         description:
+ *           type: string
+ *           example: High-quality cotton hoodie
+ *         price:
+ *           type: number
+ *           example: 49.99
+ *         images:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["img1.jpg", "img2.jpg"]
+ *
+ *     CreateProductDto:
+ *       type: object
+ *       required:
+ *         - title
+ *         - price
+ *       properties:
+ *         title:
+ *           type: string
+ *           example: Hoodie
+ *         description:
+ *           type: string
+ *           example: High-quality cotton hoodie
+ *         price:
+ *           type: number
+ *           example: 49.99
+ *         images:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["img1.jpg", "img2.jpg"]
+ */
+
+/**
+ * @swagger
+ * /api/products:
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateProduct'
+ *             $ref: '#/components/schemas/CreateProductDto'
  *     responses:
  *       201:
  *         description: Product created successfully
  */
-productRouter.post("/",auth("admin"),validate(createProductSchema, "body"),createProduct);
+router.post("/",auth("admin"),validate(createProductSchema, "body"),createProduct);
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *   get:
- *     summary: Get products list (with filters & pagination)
+ *     summary: Get all products
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: page
- *         schema: { type: number }
- *       - in: query
- *         name: limit
- *         schema: { type: number }
- *       - in: query
- *         name: category
- *         schema: { type: string }
- *       - in: query
- *         name: search
- *         schema: { type: string }
- *       - in: query
- *         name: type
- *         schema: { type: string }
  *     responses:
  *       200:
- *         description: Products retrieved successfully
+ *         description: List of products
  */
-productRouter.get("/", auth(), validate(queryParamsSchema, "query"), getAllProducts);
+router.get("/", auth(), validate(queryParamsSchema, "query"), getAllProducts);
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   get:
- *     summary: Get product by ID
+ *     summary: Get a product by ID
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Product retrieved successfully
- *       404:
- *         description: Product not found
+ *         description: Product data
  */
-productRouter.get("/:id", auth(), getProductById);
+router.get("/:id", auth(), getProductById);
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   put:
  *     summary: Update a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *     requestBody:
- *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateProduct'
+ *             $ref: '#/components/schemas/CreateProductDto'
  *     responses:
  *       200:
- *         description: Product updated successfully
+ *         description: Updated successfully
  */
-productRouter.put("/:id", auth("admin"), validate(updateProductSchema, "body"),updateProduct);
+router.put("/:id", auth("admin"), validate(updateProductSchema, "body"),updateProduct);
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         schema: { type: string }
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Product deleted successfully
+ *         description: Deleted successfully
  */
-productRouter.delete("/:id", auth("admin"), deleteProduct);
+router.delete("/:id", auth("admin"), deleteProduct);
 
+export default router;

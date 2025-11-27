@@ -1,7 +1,7 @@
 import {productService} from './product.service.js'
 import {asyncHandler} from '../../utils/asyncHandler.js'
 
-// Format product response
+// product response
 export const formatProductResponse = (product) => ({
   id: product._id,
   sku: product.sku,

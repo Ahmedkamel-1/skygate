@@ -2,14 +2,14 @@
 
 This project is a RESTful API built with **Node.js**, **Express**, **MongoDB**, and **Joi** for validation. It includes authentication using JWT, structured routes, controllers, services, middleware, and a clean folder structure.
 
-## 🔐 Authentication
+## Authentication
 
 - User register
 - User login
 - Password hashing using **bcryptjs**
 - Token generation using **jsonwebtoken**
 
-## 🚀 Features
+## Features
 
 - login
 - register
@@ -17,7 +17,7 @@ This project is a RESTful API built with **Node.js**, **Express**, **MongoDB**, 
 - Product statistics
 - Swagger documentation for endpoints
 
-## 📌 Setup Instructions
+## Setup Instructions
 
 1. Clone the repository:
 
