@@ -2,23 +2,6 @@
 
 This project is a RESTful API built with **Node.js**, **Express**, **MongoDB**, and **Joi** for validation. It includes authentication using JWT, structured routes, controllers, services, middleware, and a clean folder structure.
 
-## 📁 Folder Structure
-
-```
-project-folder/
-│── src/
-│   ├── config/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   └── utils/
-│── .env
-│── package.json
-│── README.md
-```
-
 ## 🔐 Authentication
 
 - User register
@@ -28,11 +11,13 @@ project-folder/
 
 ## 🚀 Features
 
-- Create User
-- Get All Users
-- Get Single User
-- Update User
-- Delete User
+- Register
+- login
+- Get All Products
+- Get Single product
+- Delete Product
+- Add product
+  /
 
 ## 📦 Install Dependencies
 
@@ -78,10 +63,6 @@ Example:
 ```
 POST /api/auth/register
 POST /api/auth/login
-GET /api/users
-GET /api/users/:id
-PUT /api/users/:id
-DELETE /api/users/:id
 ```
 
 ## 🧪 Testing
