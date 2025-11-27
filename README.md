@@ -126,3 +126,17 @@ All endpoints are secured with JWT token in the header where required:
 ```
 Authorization: Bearer <token>
 ```
+
+## API Documentation
+
+The API documentation for this project is available via **Swagger UI**.
+
+- URL: [http://localhost:5000/api-docs/](http://localhost:5000/api-docs/)
+
+### How to Use
+
+1. Make sure your server is running:
+
+```bash
+npm run dev
+```
