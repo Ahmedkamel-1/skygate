@@ -11,78 +11,13 @@ This project is a RESTful API built with **Node.js**, **Express**, **MongoDB**, 
 
 ## 🚀 Features
 
-- Register
 - login
-- Get All Products
-- Get Single product
-- Delete Product
-- Add product
-  /
+- register
+- CRUD operations for Products
+- Product statistics
+- Swagger documentation for endpoints
 
-## 📦 Install Dependencies
-
-```
-npm install
-```
-
-## ▶️ Run the project
-
-### Development Mode
-
-```
-npm run dev
-```
-
-### Production Mode
-
-```
-npm start
-```
-
-## ⚙️ Environment Variables
-
-Create `.env` file:
-
-```
-PORT=5000
-MONGO_URI=mongodb+srv://ahmed:ahmed2411@cluster0.xzid19l.mongodb.net/?appName=Cluster0
-JWT_SECRET=skygate__
-SALT_ROUND = 8
-```
-
-## 📌 Validation
-
-All requests are validated using **Joi** inside `/utils/validation.js`.
-
-## 📍 Routes
-
-Located in `/routes/auth.routes.js` and `/routes/user.routes.js`.
-
-Example:
-
-```
-POST /api/auth/register
-POST /api/auth/login
-```
-
-## 🧪 Testing
-
-Use **Postman** or **Thunder Client** to test all endpoints.
-
-## ✅ Status Codes
-
-- `200` Success
-- `201` Created
-- `400` Bad Request
-- `401` Unauthorized
-- `404` Not Found
-- `500` Server Error
-
-## 📄 License
-
-This project is for interview task purposes only.
-
-## Setup Instructions
+## 📌 Setup Instructions
 
 1. Clone the repository:
 
@@ -103,9 +38,8 @@ npm install
 
 ```
 PORT=5000
-MONGO_URI=mongodb+srv://ahmed:ahmed2411@cluster0.xzid19l.mongodb.net/?appName=Cluster0
-JWT_SECRET=skygate__
-SALT_ROUND = 8
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
 ```
 
 ## How to Run the Project
@@ -118,7 +52,11 @@ Server starts at: `http://localhost:5000`
 
 ## API Endpoint Examples
 
-### POST /api/auth/register
+### Auth Routes
+
+**POST /api/auth/register**
+Registers a new user.
+Body:
 
 ```json
 {
@@ -128,11 +66,63 @@ Server starts at: `http://localhost:5000`
 }
 ```
 
-### POST /api/auth/login
+**POST /api/auth/login**
+Logs in a user.
+Body:
 
 ```json
 {
   "email": "ahmed@example.com",
   "password": "12345678"
 }
+```
+
+Response:
+
+```json
+{
+  "message": "Login successful",
+  "token": "jwt_token_here"
+}
+```
+
+### Product Routes
+
+**GET /api/products**
+Get all products with optional query filters:
+
+- `page` - page number
+- `limit` - items per page
+- `category` - filter by category
+- `search` - search term
+- `type` - product type
+
+**POST /api/products** (Admin only)
+Body:
+
+```json
+{
+  "name": "iPhone 15",
+  "price": 20000,
+  "sku": "IPH-15-BLK",
+  "category": "mobiles"
+}
+```
+
+**GET /api/products/:id**
+Get single product by ID.
+
+**PUT /api/products/:id** (Admin only)
+Update a product by ID.
+
+**DELETE /api/products/:id** (Admin only)
+Delete a product by ID.
+
+**GET /api/products/stats** (Admin only)
+Get statistics for products.
+
+All endpoints are secured with JWT token in the header where required:
+
+```
+Authorization: Bearer <token>
 ```
