@@ -1,145 +1,102 @@
-import {productService} from './product.service.js'
-import {asyncHandler} from '../../utils/asyncHandler.js'
+import { productService } from "./product.service.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
-// product response
-export const formatProductResponse = (product) => ({
-  id: product._id,
-  sku: product.sku,
-  name: product.name,
-  description: product.description,
-  category: product.category,
-  type: product.type,
-  price: product.price,
-  discountPrice: product.discountPrice,
-  quantity: product.quantity,
-  createdAt: product.createdAt.toISOString(),
-  updatedAt: product.updatedAt.toISOString()
+const formatProduct = (p) => ({
+  id: p._id,
+  sku: p.sku,
+  name: p.name,
+  description: p.description,
+  category: p.category,
+  type: p.type,
+  price: p.price,
+  discountPrice: p.discountPrice,
+  quantity: p.quantity,
+  createdAt: p.createdAt,
+  updatedAt: p.updatedAt
 });
-
 
 // Create Product
 export const createProduct = asyncHandler(async (req, res) => {
-    const product = await productService.createProduct(req.body);
+  const product = await productService.create(req.body);
 
-    res.status(201).json({
-      success: true,
-      message: 'Product created successfully',
-      data: formatProductResponse(product)
-    });
-  })
-
+  res.status(201).json({
+    success: true,
+    message: "Product created successfully",
+    data: formatProduct(product)
+  });
+});
 
 // Get All Products
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const { products, pagination } = await productService.getAllProducts(
-    req.validatedQuery, 
+  const { products, pagination } = await productService.getAll(
+    req.validatedQuery,
     req.userRole
   );
 
   res.status(200).json({
     success: true,
-    message: 'Products retrieved successfully',
-    data: products.map(formatProductResponse),
+    message: "Products retrieved successfully",
+    data: products.map(formatProduct),
     pagination
   });
 });
 
-
 // Get Single Product
 export const getProductById = asyncHandler(async (req, res) => {
-    const product = await productService.getProductById(req.params.id, req.userRole);
+  const product = await productService.getById(req.params.id, req.userRole);
 
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found',
-        error: {
-          code: 'NOT_FOUND',
-          details: {
-            resource: 'Product',
-            id: req.params.id
-          }
-        }
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Product retrieved successfully',
-      data: formatProductResponse(product)
+  if (!product)
+    return res.status(404).json({
+      success: false,
+      message: "Product not found"
     });
-})
 
+  res.status(200).json({
+    success: true,
+    data: formatProduct(product)
+  });
+});
 
 // Update Product
 export const updateProduct = asyncHandler(async (req, res) => {
-    const product = await productService.updateProduct(
-      req.params.id,
-      req.body,
-      req.userRole
-    );
+  const product = await productService.update(req.params.id, req.body);
 
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found',
-        error: {
-          code: 'NOT_FOUND',
-          details: {
-            resource: 'Product',
-            id: req.params.id
-          }
-        }
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Product updated successfully',
-      data: formatProductResponse(product)
+  if (!product)
+    return res.status(404).json({
+      success: false,
+      message: "Product not found"
     });
-  })
 
- 
+  res.status(200).json({
+    success: true,
+    message: "Product updated successfully",
+    data: formatProduct(product)
+  });
+});
+
 // Delete Product
 export const deleteProduct = asyncHandler(async (req, res) => {
-    const product = await productService.deleteProduct(req.params.id);
+  const product = await productService.delete(req.params.id);
 
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found',
-        error: {
-          code: 'NOT_FOUND',
-          details: {
-            resource: 'Product',
-            id: req.params.id
-          }
-        }
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Product deleted successfully',
-      data: {
-        id: product._id,
-        sku: product.sku
-      }
+  if (!product)
+    return res.status(404).json({
+      success: false,
+      message: "Product not found"
     });
-  })
 
+  res.status(200).json({
+    success: true,
+    message: "Product deleted successfully",
+    data: { id: product._id }
+  });
+});
 
-// Get Statistics
+// Stats
 export const getStatistics = asyncHandler(async (req, res) => {
-    const stats = await productService.getStatistics();
+  const stats = await productService.stats();
 
-    res.status(200).json({
-      success: true,
-      message: 'Statistics retrieved successfully',
-      data: stats
-    });
-})
-
-
-
+  res.status(200).json({
+    success: true,
+    data: stats
+  });
+});

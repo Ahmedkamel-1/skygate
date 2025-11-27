@@ -11,7 +11,7 @@ export const generalLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-//  to prevent brute force on login/signup
+// brute force on login/signup
 export const authLimiter = rateLimit({
   wCndowMs: 5 * 60 * 1000, 
   max: 5, 

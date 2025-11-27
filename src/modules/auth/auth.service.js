@@ -22,7 +22,7 @@ export const loginService = async ({ email, password }) => {
     if (!user) throw new Error("You have to register!");
 
     const match = bcrypt.compareSync(password, user.password);
-    if (!match) throw new Error("Invalid password");
+    if (!match) throw new Error("Invald password");
 
     const token = jwt.sign(
         { id: user._id, role: user.role },
