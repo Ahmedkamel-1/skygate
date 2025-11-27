@@ -14,7 +14,7 @@ const router = Router();
 
 /**
  * @swagger
- * /products/stats:
+ * /api/products/stats:
  *   get:
  *     summary: Get product statistics
  *     tags: [Products]
@@ -33,41 +33,65 @@ router.get('/stats', auth("admin"), getStatistics);
  *     Product:
  *       type: object
  *       properties:
- *         title:
+ *         sku:
  *           type: string
- *           example: Hoodie
+ *           example: amxdvcfsdxfefhevjj4h
+ *         name:
+ *           type: string
+ *           example: iphon 18
  *         description:
  *           type: string
- *           example: High-quality cotton hoodie
+ *           example: fjkdsdfgl;ksfjgl;'fgshjjs;
+ *         category:
+ *           type: string
+ *           example: Phone
+ *         type:
+ *           type: string
+ *           enum: [public, private]
+ *           example: public
  *         price:
  *           type: number
- *           example: 49.99
- *         images:
- *           type: array
- *           items:
- *             type: string
- *           example: ["img1.jpg", "img2.jpg"]
+ *           example: 9000
+ *         discountPrice:
+ *           type: number
+ *           example: 8000
+ *         quantity:
+ *           type: number
+ *           example: 20
  *
  *     CreateProductDto:
  *       type: object
  *       required:
- *         - title
+ *         - sku
+ *         - name
  *         - price
+ *         - quantity
  *       properties:
- *         title:
+ *         sku:
  *           type: string
- *           example: Hoodie
+ *           example: amxdvcfsdxfefhevjj4h
+ *         name:
+ *           type: string
+ *           example: iphon 18
  *         description:
  *           type: string
- *           example: High-quality cotton hoodie
+ *           example: fjkdsdfgl;ksfjgl;'fgshjjs;
+ *         category:
+ *           type: string
+ *           example: Phone
+ *         type:
+ *           type: string
+ *           enum: [public, private]
+ *           example: public
  *         price:
  *           type: number
- *           example: 49.99
- *         images:
- *           type: array
- *           items:
- *             type: string
- *           example: ["img1.jpg", "img2.jpg"]
+ *           example: 9000
+ *         discountPrice:
+ *           type: number
+ *           example: 8000
+ *         quantity:
+ *           type: number
+ *           example: 20
  */
 
 /**

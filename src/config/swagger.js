@@ -1,6 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -17,13 +16,21 @@ const options = {
         bearerAuth: {
           type: "http",
           scheme: "bearer",
-          bearerFormat: "JWT"
-        }
-      }
+          bearerFormat: "JWT",
+        },
+      },
     },
+
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
+
   apis: ["./src/modules/**/*.js"],
 };
+
 
 
 export const swaggerSpec = swaggerJSDoc(options);
