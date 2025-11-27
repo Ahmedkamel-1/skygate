@@ -5,8 +5,8 @@ import { User } from "../../../DB/models/user.model.js";
 export const registerService = async ({ username, email, password }) => {
     // check if email exists
     const exists = await User.findOne({ email });
-    if (exists) throw new Error("Email already exists");
-
+    if (exists) throw new Error("E mail already exists");
+    
     const hashedPass = bcrypt.hashSync(password, 10);
 
     const user = await User.create({
