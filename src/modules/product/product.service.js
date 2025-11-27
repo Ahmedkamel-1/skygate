@@ -1,9 +1,8 @@
 import { Product } from '../../../DB/models/product.model.js'
 
-// Simple in-memory cache
 let statsCache = null;
 let statsCacheTime = null;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 5 * 60 * 1000;
 
 const invalidateStatsCache = () => {
   statsCache = null;

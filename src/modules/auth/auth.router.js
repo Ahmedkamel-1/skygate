@@ -22,7 +22,7 @@ const router = Router();
  *           example: ahmed
  *         email:
  *           type: string
- *           example: ahmed@example.com
+ *           example: ahmed@yahoo.com
  *         password:
  *           type: string
  *           example: "12345678"
@@ -35,7 +35,7 @@ const router = Router();
  *       properties:
  *         email:
  *           type: string
- *           example: ahmed@example.com
+ *           example: ahmed@yahoo.com
  *         password:
  *           type: string
  *           example: "12345678"

@@ -15,6 +15,7 @@ app.use(express.json());
 
 
 app.use(generalLimiter)
+
 app.use('auth',authLimiter , authRouter)
 
 

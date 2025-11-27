@@ -41,10 +41,10 @@ export const User = mongoose.model("User", userSchema);
  *       properties:
  *         name:
  *           type: string
- *           example: Ahmed Kamel
+ *           example: skygste
  *         email:
  *           type: string
- *           example: test@example.com
+ *           example: skygate@skygate.com
  *         password:
  *           type: string
  *           example: pass1234
@@ -57,7 +57,7 @@ export const User = mongoose.model("User", userSchema);
  *       properties:
  *         email:
  *           type: string
- *           example: test@example.com
+ *           example: skygate@skygate.com
  *         password:
  *           type: string
  *           example: pass1234

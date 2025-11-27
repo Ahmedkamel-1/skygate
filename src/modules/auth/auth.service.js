@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import { User } from "../../../DB/models/user.model.js";
 
 export const registerService = async ({ username, email, password }) => {
-    // check if email exists
     const exists = await User.findOne({ email });
     if (exists) throw new Error("E mail already exists");
     
@@ -20,10 +19,10 @@ export const registerService = async ({ username, email, password }) => {
 
 export const loginService = async ({ email, password }) => {
     const user = await User.findOne({ email });
-    if (!user) throw new Error("Invalid credentials");
+    if (!user) throw new Error("You have to register!");
 
     const match = bcrypt.compareSync(password, user.password);
-    if (!match) throw new Error("Invalid credentials");
+    if (!match) throw new Error("Invalid password");
 
     const token = jwt.sign(
         { id: user._id, role: user.role },
