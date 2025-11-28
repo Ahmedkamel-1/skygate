@@ -7,6 +7,7 @@ export const createProductSchema = Joi.object({
     .trim()
     .min(3)
     .max(50)
+    .pattern(/^[A-Za-z0-9-_]+$/)
     .required()
     .messages({
       "string.empty": "SKU is required",
@@ -68,6 +69,7 @@ export const updateProductSchema = Joi.object({
   quantity: Joi.number().integer().min(0),
 })
   .custom((body, helpers) => {
+    // If price and discountPrice BOTH exist
     if (
       body.price !== undefined &&
       body.discountPrice !== undefined &&
